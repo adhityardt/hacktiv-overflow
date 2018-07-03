@@ -116,6 +116,7 @@ export default new Vuex.Store({
           }
           answerList.push(result)
         })
+        answerList.pop()
         commit('getAnswers', answerList)
       })
     }
