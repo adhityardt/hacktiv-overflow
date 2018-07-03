@@ -12,7 +12,8 @@ export default new Vuex.Store({
     usersDb: '',
     questionPicked: '',
     questionUrl: '',
-    userId: localStorage.getItem('userId')
+    userId: localStorage.getItem('userId'),
+    answersDb: ''
   },
   mutations: {
     setUserId (state, payload) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     createUrl (state, payload) {
       state.questionUrl = payload
+    },
+    getAnswers (state, payload) {
+      state.answersDb = payload
     }
   },
   actions: {
@@ -92,9 +96,28 @@ export default new Vuex.Store({
         answer: payload.answer,
         userId: localStorage.getItem('userId')
       })
+      // .then(response => {
+      //   db.ref(`/${payload.question}/`).push({
+      //     answer: payload.answer,
+      //     userId: localStorage.getItem('userId')
+      //   })
+      // })
     },
     putQuestionToLocal ({commit}, payload) {
       localStorage.setItem('questionRef', payload)
+    },
+    getAnswers ({commit}, payload) {
+      let answerList = []
+      db.ref(`/Questions/${payload}`).on('value', (snapshot) => {
+        snapshot.forEach(snap => {
+          let result = {
+            key: snap.key,
+            data: snap.val()
+          }
+          answerList.push(result)
+        })
+        commit('getAnswers', answerList)
+      })
     }
   }
 })
