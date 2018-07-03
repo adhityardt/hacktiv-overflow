@@ -1,13 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div>
+      <!-- <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> -->
     </div>
     <router-view/>
   </div>
 </template>
-
+<script>
+import {db} from './firebase.js'
+import {mapActions} from 'vuex'
+export default {
+  firebase: {
+    questions: db.ref('/Questions'),
+    users: db.ref('/Users')
+  },
+  methods: {
+    ...mapActions([
+      'setQuestionDb',
+      'setUsersDb'
+    ])
+  },
+  created () {
+    this.setQuestionDb(this.questions)
+    this.setUsersDb(this.users)
+  }
+}
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

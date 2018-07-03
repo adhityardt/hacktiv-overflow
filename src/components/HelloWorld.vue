@@ -54,3 +54,10 @@ a {
   color: #42b983;
 }
 </style>
+[ { 
+  "-LGPa9PVPCJWkbe6Rf94": { 
+  "userId": "KQkaows1aRRHJWEr0hEfrk3cfbv1" 
+  }, 
+  "jhdgnmxhjkjka": { "answer": "just kill it" },
+   "jkdjkfjakjdkjfa": { "answer": "just do it" },
+    ".key": "How to untie a tie?" }, { "createdby": "adhitya yaya", ".key": "What is your name" }, { "userId": "KQkaows1aRRHJWEr0hEfrk3cfbv1", ".key": "Why Everyone is watching?" } ]
