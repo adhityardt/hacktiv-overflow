@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import SideBarNavBar from '@/components/SideBarNavBar.vue'   
+import SideBarNavBar from '@/components/SideBarNavBar.vue'  
 export default {
   name: 'mainpage',
   components: {

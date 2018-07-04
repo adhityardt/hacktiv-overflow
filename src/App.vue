@@ -13,17 +13,23 @@ import {mapActions} from 'vuex'
 export default {
   firebase: {
     questions: db.ref('/Questions'),
-    users: db.ref('/Users')
+    users: db.ref('/Users'),
+    comments: db.ref('/Comments'),
+    upvotes: db.ref('/Upvotes')
   },
   methods: {
     ...mapActions([
       'setQuestionDb',
-      'setUsersDb'
+      'setUsersDb',
+      'setCommentsDb',
+      'setUpvotesDb'
     ])
   },
   created () {
     this.setQuestionDb(this.questions)
     this.setUsersDb(this.users)
+    this.setCommentsDb(this.comments)
+    this.setUpvotesDb(this.upvotes)
   }
 }
 </script>

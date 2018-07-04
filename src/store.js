@@ -12,8 +12,12 @@ export default new Vuex.Store({
     usersDb: '',
     questionPicked: '',
     questionUrl: '',
+    commentsDb: '',
     userId: localStorage.getItem('userId'),
-    answersDb: ''
+    answersDb: '',
+    questionRef: localStorage.getItem('questionRef'),
+    answerKey: localStorage.getItem('answerKey'),
+    upvotesDb: ''
   },
   mutations: {
     setUserId (state, payload) {
@@ -33,6 +37,12 @@ export default new Vuex.Store({
     },
     getAnswers (state, payload) {
       state.answersDb = payload
+    },
+    setCommentsDb (state, payload) {
+      state.commentsDb = payload
+    },
+    setUpvotesDb (state, payload) {
+      state.upvotesDb = payload
     }
   },
   actions: {
@@ -81,11 +91,19 @@ export default new Vuex.Store({
         createdBy: localStorage.getItem('userId')
       })
     },
+    // addUpdateQuestion ({commit}, payload) {
+    //   db.ref('/Questions/' + payload).update({
+    //     createdBy: localStorage.getItem('userId')
+    //   })
+    // },
     setQuestionDb ({commit}, payload) {
       commit('setQuestionDb', payload)
     },
     setUsersDb ({commit}, payload) {
       commit('setUsersDb', payload)
+    },
+    setCommentsDb ({commit}, payload) {
+      commit('setCommentsDb', payload)
     },
     putQuestionPickedToState ({commit}, payload) {
       commit('questionPickedToState', payload)
@@ -96,19 +114,29 @@ export default new Vuex.Store({
         answer: payload.answer,
         userId: localStorage.getItem('userId')
       })
-      // .then(response => {
-      //   db.ref(`/${payload.question}/`).push({
-      //     answer: payload.answer,
-      //     userId: localStorage.getItem('userId')
-      //   })
-      // })
+    },
+    updateAnswerDb ({commit}, payload) {
+      db.ref('/Questions/' + payload.question).child(localStorage.getItem('updateAnswerKey')).update({
+        answer: payload.answer
+      })
+    },
+    deleteAnswerDb ({commit}, payload) {
+      alertify.confirm('Are you sure?',
+        function () {
+          alertify.success('Answer successfully deleted')
+          db.ref('/Questions/' + payload.question).child(payload.answerKey).remove()
+          window.location.reload()
+        },
+        function () {
+          alertify.error('Cancel')
+        })
     },
     putQuestionToLocal ({commit}, payload) {
       localStorage.setItem('questionRef', payload)
     },
     getAnswers ({commit}, payload) {
       let answerList = []
-      db.ref(`/Questions/${payload}`).on('value', (snapshot) => {
+      db.ref(`/Questions/${payload}`).once('value', (snapshot) => {
         snapshot.forEach(snap => {
           let result = {
             key: snap.key,
@@ -119,6 +147,26 @@ export default new Vuex.Store({
         answerList.pop()
         commit('getAnswers', answerList)
       })
+    },
+    addCommentDb ({commit, state}, payload) {
+      db.ref('/Comments/' + localStorage.getItem('answerKey')).set({
+        comment: payload,
+        userId: state.userId
+      })
+    },
+    answerKeyToLocal ({commit}, payload) {
+      localStorage.setItem('answerKey', payload)
+    },
+    incrementUpvoteDb ({commit}, payload) {
+      db.ref('/Upvotes/' + payload).child('upvoteTotal').transaction(function (currentValue) {
+        return (currentValue || 0) + 1
+      })
+    },
+    setUpvotesDb ({commit}, payload) {
+      commit('setUpvotesDb', payload)
+    },
+    putEditQuestionLocal ({commit}, payload) {
+      localStorage.setItem('editQuestionKey', payload)
     }
   }
 })

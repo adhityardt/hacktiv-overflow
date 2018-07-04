@@ -146,8 +146,6 @@
             <form class="form-signin">
               <h6 class="h6 mb-3 font-weight-normal">{{usersDb.filter(function (el) {return el['.key'] == userId})[0].name}} added</h6>
               <h5>{{questionPicked}}</h5>
-              <!-- <input id="question" type="text" class="form-control" placeholder="Please answer the question correctly" v-model="answer"> -->
-              <!-- <textarea class="form-control" rows="10" placeholder="Please answer the question correctly" v-model="answer"></textarea> -->
               <wysiwyg v-model="answerHTML" />
             </form>
           </div>
@@ -158,6 +156,31 @@
         </div>
       </div>
     </div>
+    <!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Kura-Kuora</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5>You are editing a question</h5>
+            <h5>{{editQuestion}}</h5>
+            <hr>
+            <form class="form-signin">
+              <h6 class="h6 mb-3 font-weight-normal">{{usersDb.filter(function (el) {return el['.key'] == userId})[0].name}} added</h6>
+              <input type="text" class="form-control" placeholder="Edit the question here" v-model="updateQuestionString">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="updateQuestion">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -169,7 +192,9 @@ export default {
   data () {
     return {
       question: '',
-      answerHTML: ''
+      answerHTML: '',
+      editQuestion: localStorage.getItem('editQuestionKey'),
+      // updateQuestionString: ''
     }
   },
   computed:{
@@ -197,6 +222,9 @@ export default {
       }
       this.addQuestion(payload)
     },
+    // updateQuestion () {
+    //   this.addUpdateQuestion(this.updateQuestionString)
+    // },
     putAnswerToDb () {
       let payload = {
         question: localStorage.getItem('questionPicked'),
@@ -206,7 +234,8 @@ export default {
     },
     ...mapActions ([
       'addQuestion',
-      'addAnswerDb'
+      'addAnswerDb',
+      // 'addUpdateQuestion'
     ])
   }
 };
