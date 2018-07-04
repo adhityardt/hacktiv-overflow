@@ -18,7 +18,7 @@
         </router-link>
       </div>
       <div class="card-footer">
-        <button data-toggle="modal" data-target="#answerModal" class="btn" @click="putQuestionToState(question['.key'])">
+        <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary" @click="putQuestionToState(question['.key'])">
           <img src="@/assets/glyphicons-236-pen.png" >  
           Answer
         </button>

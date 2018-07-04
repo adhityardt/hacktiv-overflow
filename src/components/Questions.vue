@@ -7,7 +7,7 @@
         <h3>{{question}}</h3>
       </div>
       <div class="card-footer">
-        <button data-toggle="modal" data-target="#answerModal" class="btn">
+        <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary">
           <img src="@/assets/glyphicons-236-pen.png" >  
           Answer
         </button>
@@ -23,13 +23,13 @@
       </div>
         <div v-html="answer.data.answer"></div>
         <div id="editButton" v-if="answer.data.userId == userId">
-          <button data-toggle="modal" data-target="#updateAnswerModal" class="btn" @click="editAnswer(answer.key)"  >
-            <img src="@/assets/glyphicons-151-edit.png" >  
-            Edit Answer
-          </button>
-          <button class="btn" @click="deleteAnswer(answer.key)"  >
+          <button class="btn btn-danger" @click="deleteAnswer(answer.key)"  >
             <img src="@/assets/glyphicons-257-delete.png" >  
             Delete Answer
+          </button>
+          <button data-toggle="modal" data-target="#updateAnswerModal" class="btn btn-warning" @click="editAnswer(answer.key)"  >
+            <img src="@/assets/glyphicons-151-edit.png" >  
+            Edit Answer
           </button>
         </div>
         <ul class="list-group list-group-flush" style="text-align: left;">
@@ -49,11 +49,11 @@
           </li>
         </ul>
       <div class="card-footer">
-        <button data-toggle="modal" data-target="#commentModal" class="btn" @click="putAnswerKeyToLocal(answer.key)" style="margin-left:5px;">
+        <button data-toggle="modal" data-target="#commentModal" class="btn btn-info" @click="putAnswerKeyToLocal(answer.key)" style="margin-left:5px;">
           <img src="@/assets/glyphicons-310-comments.png" >  
           Comment
         </button>
-        <button class="btn" @click="incrementUpvote(answer.key, answer.data.userId)" style="margin-left:5px;">
+        <button class="btn btn-success" @click="incrementUpvote(answer.key, answer.data.userId)" style="margin-left:5px;">
           <img src="@/assets/glyphicons-348-hand-up.png" >  
           Upvote Answer 
           <div v-if="upvotesDb.filter(function (el){return el['.key'] == answer.key}).length !== 0">

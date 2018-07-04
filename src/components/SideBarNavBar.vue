@@ -1,69 +1,10 @@
 <template>
   <div>
     <div class="wrapper">
-      <!-- Sidebar Holder -->
-      <nav id="sidebar" class="">
-        <div class="sidebar-header">
-          <a class="navbar-brand" href="#" style="color:red;">KURA-KUORA</a>
-        </div>
-
-        <ul class="list-unstyled components">
-          <p>Dummy Heading</p>
-          <li class="active">
-            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
-              <li>
-                  <a href="#">Home 1</a>
-              </li>
-              <li>
-                  <a href="#">Home 2</a>
-              </li>
-              <li>
-                  <a href="#">Home 3</a>
-              </li>
-          </ul>
-          </li>
-          <li>
-            <a href="#">About</a>
-            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
-                    <a href="#">Page 1</a>
-                </li>
-                <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
-                </li>
-            </ul>
-          </li>
-          <li>
-              <a href="#">Portfolio</a>
-          </li>
-          <li>
-              <a href="#">Contact</a>
-          </li>
-      </ul>
-
-      <ul class="list-unstyled CTAs">
-          <li>
-              <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-          </li>
-          <li>
-              <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-          </li>
-      </ul>
-      </nav>
-
+      
       <!-- Page Content Holder -->
       <div id="content">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <button type="button" id="sidebarCollapse" class="navbar-btn">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-          </button>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -71,21 +12,9 @@
           <div class="collapse navbar-collapse" id="navbarsExample05">
               <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                  <div class="dropdown-menu" aria-labelledby="dropdown05">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
+                <router-link :to="{path: '/mainpage/'}">
+                  <h3 style="color: white;">KURA KUORA </h3>
+                </router-link>
               </li>
               </ul>
               <button class="btn btn-danger" @click="doLogOut">
