@@ -18,10 +18,21 @@
         </router-link>
       </div>
       <div class="card-footer">
-        <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary" @click="putQuestionToState(question['.key'])">
-          <img src="@/assets/glyphicons-236-pen.png" >  
-          Answer
-        </button>
+          <!-- <h6>{{question['createdBy']}}</h6>
+          <br>
+          <h6>user id {{userId}}</h6> -->
+        <div v-if="question['createdBy'] == userId">
+          <button class="btn btn-light" @click="noAnswer">
+            <img src="@/assets/glyphicons-236-pen.png" >  
+            Answer
+          </button>
+        </div>
+        <div v-else>
+          <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary" @click="putQuestionToState(question['.key'])">
+            <img src="@/assets/glyphicons-236-pen.png" >  
+            Answer
+          </button>
+        </div>
         <!-- <div v-if="question['createdBy'] == userId">
           <button data-toggle="modal" data-target="#editModal" class="btn" @click="editQuestion(question['.key'])" style="margin-left: 5px;">
             <img src="@/assets/glyphicons-151-edit.png" >  
@@ -47,12 +58,16 @@ export default {
     editQuestion (questionKey) {
       this.putEditQuestionLocal(questionKey)
     },
+    noAnswer () {
+      this.noAnswerNotif()
+    },
     ...mapActions([
       'addAnswerDb',
       'putQuestionPickedToState',
       'createURL',
       'putQuestionToLocal',
-      'putEditQuestionLocal'
+      'putEditQuestionLocal',
+      'noAnswerNotif'
     ])
   },
   computed:{

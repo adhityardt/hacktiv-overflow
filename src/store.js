@@ -125,6 +125,9 @@ export default new Vuex.Store({
         userId: localStorage.getItem('userId')
       })
     },
+    noAnswerNotif ({commit}) {
+      alertify.alert("You can't answer your own question!")
+    },
     updateAnswerDb ({commit}, payload) {
       db.ref('/Questions/' + payload.question).child(localStorage.getItem('updateAnswerKey')).update({
         answer: payload.answer

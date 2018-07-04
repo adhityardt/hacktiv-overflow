@@ -6,11 +6,25 @@
       <div class="card-body">
         <h3>{{question}}</h3>
       </div>
+      <!-- <h4>{{questionDb.filter(function(el){return el['.key'] == question})[0].createdBy}}</h4> -->
+        <!-- <h4>{{questionDb.filter(function(el){return el[localStorage.getItem('questionRef')]})}}</h4> -->
       <div class="card-footer">
-        <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary">
+        <!-- <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary">
           <img src="@/assets/glyphicons-236-pen.png" >  
           Answer
-        </button>
+        </button> -->
+        <div v-if="questionDb.filter(function(el){return el['.key'] == question})[0].createdBy == userId">
+          <button class="btn btn-light" @click="noAnswer">
+            <img src="@/assets/glyphicons-236-pen.png" >  
+            Answer
+          </button>
+        </div>
+        <div v-else>
+          <button data-toggle="modal" data-target="#answerModal" class="btn btn-primary" @click="putQuestionToState(question['.key'])">
+            <img src="@/assets/glyphicons-236-pen.png" >  
+            Answer
+          </button>
+        </div>
       </div>
     </div>
     <h4 style="text-align:left;margin-left:20px;"> {{answersDb.length}} Answers</h4>
@@ -201,6 +215,9 @@ export default {
       this.deleteAnswerDb(payload)
       // window.location.reload()
     },
+    noAnswer () {
+      this.noAnswerNotif()
+    },
     ...mapActions([
       'getAnswers',
       'addAnswerDb',
@@ -209,7 +226,8 @@ export default {
       'getComments',
       'incrementUpvoteDb',
       'updateAnswerDb',
-      'deleteAnswerDb'
+      'deleteAnswerDb',
+      'noAnswerNotif'
     ])
   },
   created () {
