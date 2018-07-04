@@ -49,14 +49,18 @@ export default new Vuex.Store({
     logIn ({ commit }, payload) {
       user.signInWithEmailAndPassword(payload.email, payload.password)
         .then(response => {
-          localStorage.setItem('userId', response.user.uid)
-          commit('setUserId', response.user.uid)
-          console.log(response.user)
-          alertify
-            .alert('You have successfully logged in', function () {
-              alertify.message('You are now logged in')
-            })
-          router.push({name: 'mainpage'})
+          if (user.currentUser.emailVerified === true) {
+            localStorage.setItem('userId', response.user.uid)
+            commit('setUserId', response.user.uid)
+            console.log(response.user)
+            alertify
+              .alert('You have successfully logged in', function () {
+                alertify.message('You are now logged in')
+              })
+            router.push({name: 'mainpage'})
+          } else {
+            alertify.alert('Please verify your email')
+          }
         })
         .catch(error => {
           alertify
@@ -69,13 +73,19 @@ export default new Vuex.Store({
     register ({commit}, payload) {
       user.createUserWithEmailAndPassword(payload.email, payload.password)
         .then(response => {
-          db.ref('/Users/').child(response.user.uid).set({
-            name: payload.name,
-            email: payload.email
-          })
-          alertify
-            .alert('You have successfully registered', function () {
-              alertify.message('You are registered to the database')
+          user.currentUser.sendEmailVerification()
+            .then(function () {
+              db.ref('/Users/').child(response.user.uid).set({
+                name: payload.name,
+                email: payload.email
+              })
+              alertify
+                .alert('You have successfully registered', function () {
+                  alertify.message('Verify your email to login')
+                })
+            })
+            .catch(error => {
+              console.log(error)
             })
         })
         .catch(err => {
